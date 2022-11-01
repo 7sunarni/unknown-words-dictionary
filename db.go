@@ -47,7 +47,7 @@ func listBucket(bucketName string) ([]MyDictionary, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer tx.Commit()
+	defer tx.Rollback()
 	bucket := tx.Bucket([]byte(bucketName))
 	if bucket == nil {
 		return nil, nil
