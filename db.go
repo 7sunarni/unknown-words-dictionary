@@ -20,6 +20,12 @@ func init() {
 	db = boltDB
 }
 
+func TodySearched() ([]MyDictionary, error) {
+	now := time.Now()
+	dics, _ := listBucket(dataKey(now))
+	return dics, nil
+}
+
 func TodayNeedRemember() ([]MyDictionary, error) {
 	now := time.Now()
 	day1BeforeNow := now.Add(-1 * 24 * time.Hour)

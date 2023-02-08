@@ -8,6 +8,7 @@ import (
 func main() {
 	http.HandleFunc("/dictionary", dictionary)
 	http.HandleFunc("/remember", remember)
+	http.HandleFunc("/history", searched)
 	http.ListenAndServe(":18080", nil)
 }
 
@@ -33,6 +34,15 @@ func dictionary(rw http.ResponseWriter, r *http.Request) {
 
 func remember(rw http.ResponseWriter, r *http.Request) {
 	ret, err := TodayNeedRemember()
+	if err != nil {
+		rw.Write([]byte(err.Error()))
+		return
+	}
+	json.NewEncoder(rw).Encode(ret)
+}
+
+func searched(rw http.ResponseWriter, r *http.Request) {
+	ret, err := TodySearched()
 	if err != nil {
 		rw.Write([]byte(err.Error()))
 		return
