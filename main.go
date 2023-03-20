@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"net/http"
 )
 
@@ -29,7 +28,7 @@ func dictionary(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	json.NewEncoder(rw).Encode(dictionary)
+	WrapHTML(rw, dictionary)
 }
 
 func remember(rw http.ResponseWriter, r *http.Request) {
@@ -38,7 +37,7 @@ func remember(rw http.ResponseWriter, r *http.Request) {
 		rw.Write([]byte(err.Error()))
 		return
 	}
-	json.NewEncoder(rw).Encode(ret)
+	WrapHTML(rw, ret)
 }
 
 func searched(rw http.ResponseWriter, r *http.Request) {
@@ -47,5 +46,5 @@ func searched(rw http.ResponseWriter, r *http.Request) {
 		rw.Write([]byte(err.Error()))
 		return
 	}
-	json.NewEncoder(rw).Encode(ret)
+	WrapHTML(rw, ret)
 }
