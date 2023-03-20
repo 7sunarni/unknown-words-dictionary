@@ -1,13 +1,13 @@
 package main
 
 import (
-	"encoding/json"
 	"net/http"
 )
 
 func main() {
 	http.HandleFunc("/dictionary", dictionary)
 	http.HandleFunc("/remember", remember)
+	http.HandleFunc("/history", searched)
 	http.ListenAndServe(":18080", nil)
 }
 
@@ -37,5 +37,14 @@ func remember(rw http.ResponseWriter, r *http.Request) {
 		rw.Write([]byte(err.Error()))
 		return
 	}
-	json.NewEncoder(rw).Encode(ret)
+	WrapHTML(rw, ret)
+}
+
+func searched(rw http.ResponseWriter, r *http.Request) {
+	ret, err := TodySearched()
+	if err != nil {
+		rw.Write([]byte(err.Error()))
+		return
+	}
+	WrapHTML(rw, ret)
 }
